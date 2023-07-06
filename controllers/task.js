@@ -27,7 +27,7 @@ export const newTask = async ( req , res , next ) => {
 } 
 
 
- export const getMyTask = async( req , res ) => {
+ export const getMyTask = async( req , res , next ) => {
 
     try {
         const userid= req.user._id;
