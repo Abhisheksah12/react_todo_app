@@ -35,7 +35,7 @@ import { sendCookie } from "../utils/features.js";
   };
 
 // backend for register
-  export const  register = async (req , res ) =>{
+  export const  register = async (req , res , next ) =>{
       try {
         const {name,email,password} =req.body;
    
