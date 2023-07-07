@@ -35,34 +35,23 @@ import { sendCookie } from "../utils/features.js";
   };
 
 // backend for register
-  export const  register = async (req , res , next ) =>{
-      try {
-        const {name,email,password} =req.body;
-   
-      let user = await User.findOne({ email });
+export const register = async (req, res , next) => {
+  try {
+    const { name, email, password } = req.body;
 
-      if( user ) return next(new ErrorHandler("User Already Exist",400));
+    let user = await User.findOne({ email });
 
-     
+    if (user) return next(new ErrorHandler("User Already Exist", 400));
 
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash( password ,salt); 
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-     //user = await User.create({ name, email, hashedPassword }); it same as how it works down
-     const doc  =  new User({
-      name: name,
-      email:email,
-      password:hashedPassword
+    user = await User.create({ name, email, password: hashedPassword });
 
-     });
-     await doc.save();
-
-    sendCookie( user , res , " Successfully Registered " , 201);
-
-      } catch (error) {
-        next(error);
-      }
-    };
+    sendCookie(user, res, "Registered Successfully", 201);
+  } catch (error) {
+    next(error);
+  }
+};
 
 //  backend for getting profile
     export const getMyProfile =  (req,res) =>{
